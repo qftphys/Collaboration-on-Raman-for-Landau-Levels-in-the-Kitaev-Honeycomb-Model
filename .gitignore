@@ -1,0 +1,8 @@
+# this is a comment. This file gives the the filetypes git should ignore.
+
+# Intermediate files from Brent's editor (TeXstudio)
+*.aux
+*.blg
+*.out
+*.log
+*.synctex.gz
