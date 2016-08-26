@@ -10,10 +10,10 @@
 
 %latexdiff-so file1.tex file2.tex > diff.tex
 
-\documentclass[reprint,amsmath,amssymb,aps,prb,groupedaddress,nofootinbib,superscriptaddress]{revtex4-1}
+\documentclass[reprint,amsmath,amssymb,aps,prl,groupedaddress,nofootinbib,superscriptaddress]{revtex4-1}
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 %\documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
-
+\usepackage{graphicx}
 \usepackage{amsthm,amssymb,amsmath,braket,mathdots}
 \usepackage{bm}
 \usepackage[hidelinks,pagebackref=false,pdfnewwindow=true]{hyperref} %\hypersetup{draft}
@@ -57,8 +57,6 @@
 \newcommand{\fb}{\it \color{orange}}
 \definecolor{palatinatepurple}{rgb}{0.49, 0.24, 0.46}
 \newcommand{\bp}{ \color{straw} }
-\definecolor{darkblue}{rgb}{0.0, 0.0, 0.55}
-\newcommand{\np}{ \color{darkblue}}
 \definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
 \newcommand{\jk}{\it \color{darkgreen}}
 
@@ -76,8 +74,6 @@
 %		%	
 %		\author{Johannes Knolle}
 %		\affiliation{\small Department of Physics, Cavendish Laboratory, JJ Thomson Avenue, Cambridge CB3 0HE, U.K.}
-%		%	
-%		\author{Natalia B. Perkins}
 %		%	
 %		\author{F. J. Burnell}
 %		\affiliation{\small School of Physics and Astronomy, University of Minnesota, Minneapolis, Minnesota 55455, USA}
@@ -101,13 +97,14 @@
 		%	\tableofcontents
 		
 		
-		%{\np Natasha }	
 		%{\jk Johannes}
 		%{\bp Brent} {\fb Fiona}
 	
 	%\tableofcontents
 	
 	\section{Introduction}
+	
+{\bp	TODO: Add some mention of why we choose $\beta = 10$. There is a paragraph on this in the ``Notes." }
 	
 Lattice strain can induce effective magnetic fields without actually breaking time reversal symmetry. An out of plane (along the $z$-axis) magnetic field can be induced by strain fields of the form $B=\beta \left[2 \partial_x u_{xy}-\partial_y (u_{xx}-u_{yy}) \right]$. Here, in addition to our numerical evaluations we try to obtain a more microscopic understanding of the influence of such a pseudo magnetic field on a Majorana fermion system and how the expected Landau level degeneracy is manifest in the Raman response function. 
 
@@ -159,19 +156,81 @@ I_{\text{res}} & \propto &  \sum_{np} \delta\left[\omega - 2E(n)  \right] .
 \end{eqnarray}
 In agreement with the numerical observation we find different scaling of the resonant and non-resonant intensities which originates from the sub-lattice selectivity of the vertices and the special structure of LL wave functions in Dirac systems which mix adjacent LL indices. 
 
+
+
+\begin{figure*}
+	\centering
+	\begin{tikzpicture}
+	\node{\includegraphics[width=0.32\linewidth]{stretch_DOS_special_rmax_50_b_10_c_40.eps}
+		\quad
+		\includegraphics[width=0.32\linewidth]{stretch_I2_special_rmax_50_b_10_c_40.eps} 
+		\includegraphics[width=0.32\linewidth]{stretch_I3_special_rmax_50_b_10_c_40.eps} } ;
+	\node[] (image) at (-8.75,1.55) {(a)};
+	\node[] (image) at (-2.70,1.55) {(b)};
+	\node[] (image) at ( 3.35,1.55) {(c)};
+	\end{tikzpicture}
+	\caption{The DOS and all possible Raman correlation functions for $s=4$\% maximum strain and zero strain with $r=50$ corresponding to $6*(50+1)^2 = 15606$ sites. (a) shows peaks at $\sqrt{n}E_0$ while (b) has them at $(\sqrt{n} + \sqrt{n+1})E_0 $ and (c) $2 \sqrt{n} E_0$. One can see that the Landau level peaks are easily distinguishable from finite size effects at this system size and strain.}
+	\label{basicPlots}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+	\begin{tikzpicture}
+	\node{\includegraphics[width=0.32\linewidth]{stretch_comp_xy2_b_10_n_30_maxn_100_special.eps} 
+		\quad
+		\includegraphics[width=0.32\linewidth]{size_comp_xy2_b_10_s_4_maxn_50_special.eps} 
+		\includegraphics[width=0.32\linewidth]{stretch_comp_Ixy2_finiteT_b_rmax_15_b_10_s_40_special.eps}  } ;
+	\node[] (image) at (-8.75,1.55) {(a)};
+	\node[] (image) at (-2.75,1.55) {(b)};
+	\node[] (image) at ( 3.25,1.55) {(c)};
+	\end{tikzpicture}
+	\caption{A set of density plots showing the progression of Landau level peaks as a function of (a) strain, (b) system size, and (c) temperature. Where not specified the strain is taken at $s=4$\% and $T=0$ with the system sizes (a) $r = 30$ and (c) $r = 15$. The temperature of the crossover in (c) agrees well with the expected spinon-confinement transition for non-interacting fluxes at $T_c \approx 0.02J$ for this system size, which is expected to be lowered slightly by flux-flux interactions.} 
+	\label{colorPlots}
+\end{figure*}
+
+\section{Results} 
+We follow the Refs.~\cite{Guinea10,Amal13,Rachel15} to study a honeycomb flake, strained in a way that preserves the $S_6$ lattice symmetry. With the strain pattern given by% to model a strained honeycomb flake. We take $x$ and $y$ to be the positions of a lattice site without any strain (the base configuration makes a perfect honeycomb), measured in units of $a_0$, the lattice constant (the distance between two NN sites). We then write
+\begin{align}
+\vec{u}(x,y) = C(2xy,x^2-y^2),
+\end{align}
+one obtains a uniform effective magnetic field with magnitude $B = -8 \beta C$. This pattern can be visualized as in Fig. \ref{honeycomb_flake} {\bp(Needs Figure)}.
+
+We construct the honeycomb flake as $r$ layers of honeycombs placed around an initial single one as in Fig. \ref{honeycomb_flake} \cite{Rachel15}. We choose to characterize the strain by the total amount of strain along the directions of maximal stretching and compression $s = \frac{\delta L}{L} = \sqrt{3}C(r+\frac{1}{2})$ so that $B \approx \frac{4\beta}{\sqrt{3}r}s$. For linear elasticity to hold we need $s \ll \frac{\sqrt{3}}{2\beta}$. 
+
+We take $\beta = 10$. For this case the optimal parameters are strains of $1$-$4$\% and system sizes of $r = 25$-$50$ unit cells. In RuCl$_3$ an unstrained honeycomb is about $6$\AA \ so that such flakes would have diameters of $30$-$60$nm. 
+We find that for the magnetic field to be strong enough at to create noticeable Landau levels at these system sizes it needs to be on the order of $B\approx 0.03$ and that the levels appear/disappear sharply near that value. With increasing system size the maximum value of $B$ decays with $1/r$, putting constraints on how large the honeycomb flake can be. This is in competition with the need to have a large enough system to get a spectrum that is not too noisy. 
+
+{\it Raman scattering.} 
+
+Fig. \ref{basicPlots} and Fig. \ref{colorPlots} are awesome. blah blah blah. Something about how the temperature dependence makes the Landau levels a true signature of the deconfined spin liquid phase.
+
+We used the notation $I_{[xy]}$ for the channel anti-symmetric in polarization. The subtraction required to isolate this channel was reviewed in Ref. \cite{Perreault16-1} (see supplemental). However, in practice one should see only the $\sqrt{n} + \sqrt{n+1}$ peaks in the channel $I_{xx}$, while near resonance the $I_{xy}$ channel should contain contributions similar to both $I_{(xy)} = I_{xx}$ and $I_{[xy]}$ so that the peaks following $2\sqrt{n}$ can appear.
+
+
+
+\section*{Acknowledgements}
+We acknowledge helpful discussions with K. Burch. BP was supported by the Torske Klubben Fellowhsip. The work of J.K. is supported by a Fellowship within the Postdoc-Program of the German Academic Exchange Service (DAAD). NP acknowledges the support from NSF DMR-1511768. FJB is supported by NSF DMR-1352271 and Sloan FG-2015- 65927.
+
+
+\bibliography{strain_refs}
+
+\onecolumngrid
+\appendix
+
+
 \section{Finite Temperature Formalism} 
 By the simple form of the canonical ensemble we can write 
 \begin{align}\label{iflux}
-I(\omega) \propto \sum_{\text{ flux sectors } M} e^{-\beta E_0^M} I^M(\omega)
+I(\omega) \propto \sum_{\text{ flux patterns } M}  e^{-\beta E_0^M} I^M(\omega,\beta)
 \end{align}
-where $E_0^M$ is the energy of the lowest-energy state in the flux-configuration $M$. Within each flux sector the Hamiltonian can be written in the Kitaev fermionization %$\sigma^\alpha_j = i b^\alpha_j c_j$ 
+where $E_0^M$ is the energy of the lowest-energy state in the flux-configuration $M$, and $I^M(\omega,\beta)$ is the spectrum due to the band fermionic excitations in the flux background $M$, at temperature $\beta$. The proportionality constant is the partition function $Z = \sum_{\text{ flux patterns } M} e^{-\beta E_0^M}$, which does not depend on $\omega$. For a given flux-configuration $M$ the Hamiltonian can be written in the Kitaev fermionization %$\sigma^\alpha_j = i b^\alpha_j c_j$ 
 as
 \begin{align}
 \mathcal{H} =  \frac{1}{2}\sum_{\left<rr'\right>} J^{\alpha} u^\alpha_{\left<rr'\right>} i c_r c_{r'} \equiv  \frac{1}{2}\sum_{r,r'} H_{rr'} c_r c_{r'},
 \end{align}
 where $u^\alpha_{\left<rr'\right>} = i b^\alpha_r b^\alpha_{r'} = \pm 1$. 
 %{\it Diagonalization.} 
-In terms of these Majorans $H$ has a chiral symmetry $S$ that flips sign of $c_r$ on one of two sublattices (so that $\{S,H\} = 0$). % This is common for the Kitaev model on a bipartite lattice that can lead to a sublattice symmetry within the unit cell. 
+In terms of these Majoranas $H$ has a chiral symmetry $S$ that flips sign of $c_r$ on one of two sublattices (so that $\{S,H\} = 0$). % This is common for the Kitaev model on a bipartite lattice that can lead to a sublattice symmetry within the unit cell. 
 In the basis where $S$ is diagonal $H$ takes the block-off-diagonal form
 \begin{align}
 H = i\left(\begin{array}{cc}
@@ -250,7 +309,7 @@ A & B \\ -B^\dagger & A'
 \end{array}\right)^\dagger
 \left(\begin{array}{cc}
 C & D \\ D^\dagger & -C 
-\end{array}\right) \left(\begin{array}{c}
+\end{array}\right) \left(\begin{array}{c}(
 \mathbf{a}_{\lambda'} \\
 (\mathbf{a}_{\lambda'}^\dag)^T 
 \end{array}\right).
@@ -264,20 +323,56 @@ I^M(\omega) \propto& \sum_{\lambda \lambda'} \left[ 2 |C_{\lambda \lambda'}|^2 f
 \end{align}
 where $B$ and therefore $C$ and $D$ depend on the gauge chosen for each flux configuration $M$.
 
-We evaluate the sum (\ref{iflux}) using a classical Monte-Carlo approach following the VEGAS algorithm where we sample the entire two-particle spinon spectrum of pseudorandomly-chosen flux configurations until the expected error in the total $I(\omega)$ is sufficiently low. This is made slightly faster by treating the summand as a different random function for each flux sector of $p$ total fluxes, independent of their placement. %This is made slightly easier since the spectra of flux sectors with the same number of fluxes $n$ turn out to be similar to each other when compared to other sectors . 
+We evaluate the sum (\ref{iflux}) using a classical Monte-Carlo approach which we now describe. % following the VEGAS algorithm where 
+We sample the entire two-particle spinon spectrum of pseudorandomly-chosen flux configurations to compute the summand $S^M = e^{-\beta E_0^M} I^M(\omega,\beta)$. % until the expected error in the total $I(\omega)$ is sufficiently low. 
+We organize the flux configurations in terms of the total number of fluxes $p$ on the lattice. Splitting up the index $M$ into an index for the number of fluxes $p$, or the flux sector, and the arrangement $m$ we rearrange the sum as  
+\begin{align}
+I(\omega) \propto \sum_{\text{ flux patterns } M}  S^M = \sum_{p=1}^{N_P} \sum_{m \in p} S^{p,m},
+\end{align}
+where $N_P = 3 r(r+1)$ is the total number of plaquettes on the lattice. Within a given flux sector the DOS and Raman spectra turn out to be largely independent of the arrangement.%, and therefore there is actually far less dependence on the flux arrangement $m$. 
+There are only $N_P$ flux sectors, but there are $N_m(p) = N_P! / ( (N_P - p)! p! )$ arrangements $m$ within a given flux sector, or exponentially many for most sectors. This makes the problem a good candidate for a classical Monte Carlo approach, which samples $S^{p,m}$ until the expected error in the mean is small enough to estimate the expected value (mean) $\hat{S}^p = E[S^{p,m}]_m$ to desired accuracy. The sum is approximated by  
+\begin{align}
+\hat{I}(\omega) \propto \sum_{p=1}^{N_P} \sum_{m \in p} N_m(p) \hat{S}^p.
+\end{align}
+Given the standard deviation in the mean $\delta S^p$ for each flux sector the expected error is simply 
+\begin{align}
+\delta I(\omega) \propto \sum_{p=1}^{N_P} \sum_{m \in p} N_m(p) \delta {S}^p.
+\end{align}
+At each step the flux configurations are sampled based on importance, computed to optimize the expected improvement in the error. The standard error in the mean is computed by $\hat{\sigma}_p = \sigma_p/\sqrt{n}$ where $n$ is the number of samples. For random variables in sum, labeled by $p$, the optimal sampling pulls from an importance distribution given by $\sigma_p/n^{3/2} = \hat{\sigma}_p/n$. For Gaussian statistics the convergence is expected to go like $1/\sqrt{n}$, with non-Gaussian problems converging more slowly. %given by sampling flux sectors according  randomly chosen from a distribution given by the variance $(\delta S^^p)^2$ (for non-Gaussian statistics convergence is slower).
+
+The interactions turns out to be somewhat smaller than the self energy. In Fig. \ref{EndistPlot} we plot the distribution of energies that appears from the random sampling of the Monte Carlo algorithm. As we can see, the distribution primarily follows the linear behavior expected by just counting fluxes, with some deviation on the order of 5s\%. The flux-flux interaction is empirically well-described as attractive, which is expected since the fluxes tend to bind the low-energy spinons due to destructive interference of the two directions by which one can travel around the flux caused by their semionic statistics. The crossover out of the spin-liquid is driven by the proliferation of such fluxes, which then localize the spinons. We can estimate the transition temperature by examining the free energy as a function of flux sector
+\begin{align}
+F_p = E_p - T S_p.
+\end{align}
+In the non-interacting limit $E_p = \Delta p$ where $\Delta$ is the flux self-energy given by the slope in Fig \ref{EndistPlot}, $\Delta \sim .13$. The entropy is $\ln\left(\begin{array}{c}
+N_P \\ p
+\end{array}\right)$. For small $p$ Stirling's approximation gives $S_p \approx p \ln(N_p)$. Then the free-energy becomes $F = p (\Delta - T\ln N_P)$ in this approximation, predicting a cross-over temperature $T_c = \Delta / \ln(N_P)$ that decays very slowly to zero in the thermodynamic limit. The small system sizes considered here have $N_p \sim 1000$ so that $T_c \sim \Delta / 7$. While this transition does not technically survive the thermodynamics limit, for a `macroscopic' system of size $(10cm)^2$ with $N_P \sim 10^15$ the transition is still only at $T_c \sim \Delta / 35$.
+
+One might worry that our Monte Carlo approach breaks down due to rare flux arrangements which are significant outliers to the point of dominating the distribution. Such tails of the distribution $S_{p,m}$ are possible if there are arrangements with significantly lower energy. This occurs when the flux-flux interaction prefers one arrangement over the other. As we already stated, the flux-flux interaction are attractive and smaller than the self-energy. Therefore, the lowest-energy arrangements have the fluxes closely grouped. We have numerically checked such configurations, and found that energies lower than the mean by 25\% (relative to the ground state) are possible with clumped arrangements. However, because this energy of the same order, non-zero flux sectors will still only contribute when their entropy dominates, at which point the similar difference in energy between these clustered states and the more typical states with randomly distributed fluxes will not be enough to overcome the statistical dominance of the latter.% similar arguments as given for the phase transition show that once the temperature is large enough that these states are energetically accessible the large entropy of the more typical states with randomly distributed fluxes is expected to dominate over the energetics making the latter configurations still dominant.  
 
 
 
 
+% think of the summand $S^M = e^{-\beta E_0^M} I^M(\omega,\beta)$ as a random variable that is a function of the total number of fluxes $p$. For a fixed number of fluxes $p$, $S$ deviates only so much for different placements of $p$ fluxes on the lattice so that the error in $S$ is not terribly large for any given $p$, despite This is done  We first sample the summand  several times within each flux sector.
 
 
+ %This is made slightly easier since the spectra of flux sectors with the same number of fluxes $n$ turn out to be similar to each other when compared to other sectors . 
 
-\section*{Acknowledgements}
-We acknowledge helpful discussions with S. Rachel. The work of J.K. is supported by a Fellowship within the Postdoc-Program of the German Academic Exchange Service (DAAD). NP acknowledges the support from NSF DMR-1511768. FJB is supported by NSF DMR-1352271 and Sloan FG-2015- 65927.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.4\linewidth]{stretch_En_rmax_15_b_10_s_40.eps} 
+	\caption{Distribution of energy values at the flux configurations sampled. Each sector that was sampled has at least 5 points, but many are not sampled at all if their expected contribution is too low.} 
+	\label{EndistPlot}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.43\linewidth]{stretch_Ixx_special_b_rmax_11_b_10_s_0.eps} 
+	\includegraphics[width=0.43\linewidth]{stretch_DOS_special_b_rmax_7_b_10_s_0.eps} 
+	\caption{Plots of unstrained Raman and DOS to compare with Ref. \cite{Nasu16} Fig. 3(a) and Ref. \cite{Nasu15} Fig. 3(a). resp. The comparisons appear quite favorable, although the present study did not involve the superlattice treatment that allowed Ref. \cite{Nasu15} to suppress the finite-size effects that are large in our plot of the DOS. }
+	\label{comparePlots}
+\end{figure}
 
 
-	
-	%\bibliographystyle{apsrev}
-	%\bibliography{References}
 	
 \end{document}
